@@ -6115,6 +6115,7 @@ void home_all_axes() { gcode_G28(true); }
 
     float z_mea[4] = { 0.0 };
     float z_corr[4] = { 0.0 };
+    float center;
 
     SYNC_PLAN_POSITION_KINEMATIC();
 
@@ -6123,10 +6124,14 @@ void home_all_axes() { gcode_G28(true); }
     z_mea[0] = probe_pt(LEFT_LEVELING_POSITION, FRONT_LEVELING_POSITION, false, 1);
     z_mea[1] = probe_pt(LEFT_LEVELING_POSITION, BACK_LEVELING_POSITION, false, 1);
 
-    z_corr[0] = z_mea[0] + (z_mea[0] - z_mea[2]);
-    z_corr[2] = z_mea[2] + (z_mea[2] - z_mea[0]);
-    z_corr[1] = z_mea[1] + (z_mea[1] - z_mea[3]);
-    z_corr[3] = z_mea[3] + (z_mea[3] - z_mea[1]);
+    center = (z_mea[0] + z_mea[1] + z_mea[2] + z_mea[3]) / 4;
+
+    // This assumes that measuring points are at 1/3s between z belts.
+    // So to achieve needed adjustment at measuring point, corresponding z needs to move x3
+    z_corr[0] = (z_mea[0] - center) * 3;
+    z_corr[2] = (z_mea[2] - center) * 3;
+    z_corr[1] = (z_mea[1] - center) * 3;
+    z_corr[3] = (z_mea[3] - center) * 3;
 
     SERIAL_PROTOCOLLNPGM("Measured:");
     SERIAL_PROTOCOL_F(z_mea[1], 3);
