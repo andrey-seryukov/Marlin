@@ -1016,6 +1016,11 @@ void Stepper::init() {
     #if ENABLED(Z_DUAL_STEPPER_DRIVERS) && HAS_Z2_DIR
       Z2_DIR_INIT;
     #endif
+    #if ENABLED(Z_QUAD_STEPPER_DRIVERS)
+      Z2_DIR_INIT;
+      Z3_DIR_INIT;
+      Z4_DIR_INIT;
+    #endif
   #endif
   #if HAS_E0_DIR
     E0_DIR_INIT;
@@ -1122,6 +1127,14 @@ void Stepper::init() {
     #if ENABLED(Z_DUAL_STEPPER_DRIVERS)
       Z2_STEP_INIT;
       Z2_STEP_WRITE(INVERT_Z_STEP_PIN);
+    #endif
+    #if ENABLED(Z_QUAD_STEPPER_DRIVERS)
+      Z2_STEP_INIT;
+      Z2_STEP_WRITE(INVERT_Z_STEP_PIN);
+      Z3_STEP_INIT;
+      Z3_STEP_WRITE(INVERT_Z_STEP_PIN);
+      Z4_STEP_INIT;
+      Z4_STEP_WRITE(INVERT_Z_STEP_PIN);
     #endif
     AXIS_INIT(Z, Z);
   #endif
