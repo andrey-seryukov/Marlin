@@ -783,16 +783,16 @@
 // @section machine
 
 // The size of the print bed
-#define X_BED_SIZE 254
-#define Y_BED_SIZE 254
+#define X_BED_SIZE 300
+#define Y_BED_SIZE 300
 
 // Travel limits (mm) after homing, corresponding to endstop positions.
 #define X_MIN_POS 0
 #define Y_MIN_POS 0
 #define Z_MIN_POS 0
-#define X_MAX_POS 254
-#define Y_MAX_POS 254
-#define Z_MAX_POS 230
+#define X_MAX_POS 300
+#define Y_MAX_POS 300
+#define Z_MAX_POS 280
 
 // If enabled, axes won't move below MIN_POS in response to movement commands.
 //#define MIN_SOFTWARE_ENDSTOPS
@@ -885,9 +885,9 @@
 
   // Set the boundaries for probing (where the probe can reach).
   #define LEFT_PROBE_BED_POSITION 20
-  #define RIGHT_PROBE_BED_POSITION 210
+  #define RIGHT_PROBE_BED_POSITION (X_BED_SIZE-20)
   #define FRONT_PROBE_BED_POSITION 25
-  #define BACK_PROBE_BED_POSITION 210
+  #define BACK_PROBE_BED_POSITION (Y_BED_SIZE-25)
 
   // The Z probe minimum outer margin (to validate G29 parameters).
   #define MIN_PROBE_EDGE 10
@@ -1003,7 +1003,7 @@
 
 #if ENABLED(Z_SAFE_HOMING)
   #define Z_SAFE_HOMING_X_POINT X_MAX_POS    // X point for Z homing when homing all axis (G28).
-  #define Z_SAFE_HOMING_Y_POINT (Y_MAX_POS - 33)    // Y point for Z homing when homing all axis (G28).
+  #define Z_SAFE_HOMING_Y_POINT (Y_MAX_POS - 58)    // Y point for Z homing when homing all axis (G28).
 #endif
 
 // Homing speeds (mm/m)

@@ -321,7 +321,7 @@
   // --------------------------------
 
   // Side extrusion lengths: 370 for 250mm build, 420 for 300mm build, 470 for 350mm build
-  #define X_SPAN 370.0
+  #define X_SPAN 420.0
   #define Y_SPAN X_SPAN  // Same as X_SPAN for square frame
 
   // Position of Z actuator relative to corresponding corner
@@ -353,8 +353,6 @@
 
   #define ADJUSTMENT_MULTIPLIER 3
 #endif // LEVELING_IN_QUARTERS
-
-#endif
 
 // Enable this for dual x-carriage printers.
 // A dual x-carriage design has the advantage that the inactive extruder can be parked which
