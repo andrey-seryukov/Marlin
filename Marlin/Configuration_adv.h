@@ -314,24 +314,45 @@
 
 #define Z_QUAD_STEPPER_DRIVERS
 #define NOZZLE_OFFSET_SWITCH
+#define LEVELING_IN_QUARTERS
 
 #if ENABLED(Z_QUAD_STEPPER_DRIVERS)
-
   // Printer geometry
   // --------------------------------
-  // Distance between Z acruator points
-  #define X_SPAN 370.0 // Normally the frame side extrusion lenght    
-  #define Y_SPAN (X_SPAN - 45)
 
-  // Bed 0,0 offset from front left actuator
-  #define X_BED_OFFSET ((X_SPAN - X_BED_SIZE) / 2 )
-  #define Y_BED_OFFSET 10.0
+  // Side extrusion lengths: 370 for 250mm build, 420 for 300mm build, 470 for 350mm build
+  #define X_SPAN 370.0
+  #define Y_SPAN X_SPAN  // Same as X_SPAN for square frame
 
-  // Leveling probe area
-  #define FRONT_LEVELING_POSITION ((Y_SPAN / 3) - Y_BED_OFFSET)
-  #define BACK_LEVELING_POSITION ((Y_SPAN / 3) * 2 - Y_BED_OFFSET)
-  #define LEFT_LEVELING_POSITION ((X_SPAN / 3) - X_BED_OFFSET)
-  #define RIGHT_LEVELING_POSITION ((X_SPAN / 3) * 2 - X_BED_OFFSET)
+  // Position of Z actuator relative to corresponding corner
+  #define X_INSET 0.0
+  #define Y_INSET 22.5
+
+  // Position of induction sensor from right back corner when homed in (defined by endstops geometry)
+  #define SENSOR_OFFSET_RIGHT 60.0
+  #define SENSOR_OFFSET_BACK  60.0
+
+#if ENABLED(LEVELING_IN_QUARTERS)
+  #define X_QUARTER ((X_SPAN - X_INSET * 2) / 4)
+  #define Y_QUARTER ((Y_SPAN - Y_INSET * 2) / 4)
+
+  #define RIGHT_LEVELING_POSITION (X_BED_SIZE + SENSOR_OFFSET_RIGHT - X_INSET - X_QUARTER)
+  #define BACK_LEVELING_POSITION  (Y_BED_SIZE + SENSOR_OFFSET_BACK  - Y_INSET - Y_QUARTER)
+  #define LEFT_LEVELING_POSITION  (RIGHT_LEVELING_POSITION - X_QUARTER*2)
+  #define FRONT_LEVELING_POSITION (BACK_LEVELING_POSITION  - Y_QUARTER*2)
+
+  #define ADJUSTMENT_MULTIPLIER 2
+#else
+  #define X_THIRD ((X_SPAN - X_INSET * 2) / 3)
+  #define Y_THIRD ((Y_SPAN - Y_INSET * 2) / 3)
+
+  #define RIGHT_LEVELING_POSITION (X_BED_SIZE + SENSOR_OFFSET_RIGHT - X_INSET - X_THIRD)
+  #define BACK_LEVELING_POSITION  (Y_BED_SIZE + SENSOR_OFFSET_BACK  - Y_INSET - Y_THIRD)
+  #define LEFT_LEVELING_POSITION  (RIGHT_LEVELING_POSITION - X_THIRD)
+  #define FRONT_LEVELING_POSITION (BACK_LEVELING_POSITION  - Y_THIRD)
+
+  #define ADJUSTMENT_MULTIPLIER 3
+#endif // LEVELING_IN_QUARTERS
 
 #endif
 
