@@ -320,7 +320,7 @@
   // Printer geometry
   // --------------------------------
   // Distance between Z acruator points
-  #define X_SPAN 370.0 // Normally the frame side extrusion lenght    
+  #define X_SPAN 420.0 // Normally the frame side extrusion lenght    
   #define Y_SPAN (X_SPAN - 45)
 
   // Bed 0,0 offset from front left actuator
