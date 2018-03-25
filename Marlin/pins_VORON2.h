@@ -30,6 +30,11 @@
 
 #include "pins_RAMPS.h"
 
+#undef HEATER_BED_PIN
+#undef FAN_PIN
+#undef E0_AUTO_FAN_PIN
+#undef Z_MIN_PROBE_PIN
+
 // D10 D9 D8 on Ramps
 #define HEATER_1_PIN	   10
 #define CASE_FAN_PIN 	   9
