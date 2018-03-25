@@ -353,6 +353,7 @@
 
   #define ADJUSTMENT_MULTIPLIER 3
 #endif // LEVELING_IN_QUARTERS
+#endif // Z_QUAD_STEPPER_DRIVERS
 
 // Enable this for dual x-carriage printers.
 // A dual x-carriage design has the advantage that the inactive extruder can be parked which
