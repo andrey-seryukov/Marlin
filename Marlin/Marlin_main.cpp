@@ -6128,10 +6128,10 @@ void home_all_axes() { gcode_G28(true); }
 
     // This assumes that measuring points are at 1/3s between z belts.
     // So to achieve needed adjustment at measuring point, corresponding z needs to move x3
-    z_corr[0] = (z_mea[0] - center) * 3;
-    z_corr[2] = (z_mea[2] - center) * 3;
-    z_corr[1] = (z_mea[1] - center) * 3;
-    z_corr[3] = (z_mea[3] - center) * 3;
+    z_corr[0] = (z_mea[0] - center) * ADJUSTMENT_MULTIPLIER;
+    z_corr[2] = (z_mea[2] - center) * ADJUSTMENT_MULTIPLIER;
+    z_corr[1] = (z_mea[1] - center) * ADJUSTMENT_MULTIPLIER;
+    z_corr[3] = (z_mea[3] - center) * ADJUSTMENT_MULTIPLIER;
 
     SERIAL_PROTOCOLLNPGM("Measured:");
     SERIAL_PROTOCOL_F(z_mea[1], 3);
@@ -6161,10 +6161,11 @@ void home_all_axes() { gcode_G28(true); }
       const bool relative_mode_backup = relative_mode;
       relative_mode = true;
 
-      move_quad_z(z_corr[0], false,true,true,true);
+      // Back motors are likely to sag so lift them first
       move_quad_z(z_corr[1], true,false,true,true);
       move_quad_z(z_corr[2], true,true,false,true);
       move_quad_z(z_corr[3], true,true,true,false);
+      move_quad_z(z_corr[0], false,true,true,true);
 
       relative_mode = relative_mode_backup;
     }
